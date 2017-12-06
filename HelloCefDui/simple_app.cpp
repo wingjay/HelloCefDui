@@ -66,6 +66,7 @@ SimpleApp::ProcessType SimpleApp::GetProcessType(CefRefPtr<CefCommandLine> comma
 	return OtherProcess;
 }
 
+//void SimpleApp::OnContextInitialized() {}
 void SimpleApp::OnContextInitialized() {
 	CEF_REQUIRE_UI_THREAD();
 

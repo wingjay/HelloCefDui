@@ -33,6 +33,9 @@
     <ClInclude Include="simple_handler.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MainDuiFrame.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +51,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="simple_handler_win.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainDuiFrame.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

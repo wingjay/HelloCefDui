@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Window>
+  <Font name="幼圆" size="16" default="true" />
+
+  <VerticalLayout bkcolor="#FFFF00FF">
+  	<Default name="Menu" value="inset=&quot;2,2,2,2&quot; itemtextpadding=&quot;30,0,0,0&quot; bkimage=&quot;res='121' restype='png' corner='30,8,8,8'&quot; hole=&quot;false&quot;" />
+  	<Button name="changeskin" height="20" text="Test Button" mexwidth="120" />
+  	<RichEdit name="testrichedit" bordercolor="#FF0000" bordersize="0" borderround="18,18" inset="4,2,4,2" bkcolor="#FFF2F5FA" bkcolor2="#FFA0A000" bkcolor3="#FFF2F5FA" font="1" multiline="true" vscrollbar="true" enabled="true" rich="true" readonly="false" text="Rich Edit"></RichEdit>
+  	<Edit name="Testedit" text="aaaaa测试编辑框" />
+  </VerticalLayout>
+</Window>

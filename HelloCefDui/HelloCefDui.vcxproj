@@ -167,6 +167,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="HelloCefDui.h" />
+    <ClInclude Include="MainDuiFrame.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="simple_app.h" />
     <ClInclude Include="simple_handler.h" />
@@ -175,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelloCefDui.cpp" />
+    <ClCompile Include="MainDuiFrame.cpp" />
     <ClCompile Include="simple_app.cpp" />
     <ClCompile Include="simple_handler.cpp" />
     <ClCompile Include="simple_handler_win.cpp" />

@@ -27,12 +27,27 @@
     <ClInclude Include="HelloCefDui.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="simple_app.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="simple_handler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="HelloCefDui.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="simple_app.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="simple_handler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="simple_handler_win.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

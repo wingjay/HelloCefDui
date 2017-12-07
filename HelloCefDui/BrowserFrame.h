@@ -11,8 +11,6 @@ public:
 	virtual CDuiString GetSkinFile();
 	virtual void InitWindow();
 	void Notify(TNotifyUI& msg);
-public:
-	DUI_DECLARE_MESSAGE_MAP()
 	virtual void OnClick(TNotifyUI& msg);
 public:
 	virtual LPCTSTR GetWindowClassName() const { return _T("BrowserFrame"); }

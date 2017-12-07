@@ -39,6 +39,9 @@
     <ClInclude Include="BrowserFrame.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="TestWindow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -60,6 +63,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="BrowserFrame.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestWindow.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

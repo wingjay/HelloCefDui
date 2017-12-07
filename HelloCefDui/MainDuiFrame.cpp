@@ -20,7 +20,7 @@ CDuiString MainDuiFrame::GetSkinFile() {
 
 void MainDuiFrame::InitWindow()
 {
-	// 为List动态添加内容
+	// insert content into list.
 	CDuiString str;
 	CListUI* pList = static_cast <CListUI*>(m_PaintManager.FindControl(_T("list1")));
 	for (int i = 0; i < 100; i++)
@@ -51,24 +51,7 @@ void MainDuiFrame::InitWindow()
 
 void MainDuiFrame::Notify(TNotifyUI& msg) {
 	CDuiString name = msg.pSender->GetName();
-	if (msg.sType == _T("click"))
-	{
-		if (name == _T("closebtn"))
-		{
-			Close(); // 关闭按钮
-		}
-		else if (name == _T("hello"))
-		{
-			::MessageBox(NULL, _T("I'm button"), _T("You clicked!"), NULL); // 欢迎按钮
-		}
-		else if (name == _T("openBrowser"))
-		{
-			BrowserFrame pFrame(m_handler);
-			pFrame.Create(NULL, _T("Browser"), UI_WNDSTYLE_FRAME | WS_CLIPCHILDREN, WS_EX_ACCEPTFILES);
-			pFrame.ShowModal();
-		}
-	}
-	else if (msg.sType == _T("selectchanged"))
+	if (msg.sType == _T("selectchanged"))
 	{
 		CTabLayoutUI* pControl = static_cast<CTabLayoutUI*>(m_PaintManager.FindControl(_T("tablayout")));
 
@@ -85,7 +68,30 @@ void MainDuiFrame::Notify(TNotifyUI& msg) {
 			pControl->SelectItem(2);
 		}
 	}
+	else {
+		return WindowImplBase::Notify(msg);
+	}
 }
+
+
+void MainDuiFrame::OnClick(TNotifyUI& msg) {
+	CDuiString name = msg.pSender->GetName();
+	if (name == _T("closebtn"))
+	{
+		Close(); 
+	}
+	else if (name == _T("hello"))
+	{
+		::MessageBox(NULL, _T("I'm button"), _T("You clicked!"), NULL); // welcome button
+	}
+	else if (name == _T("openBrowser"))
+	{
+		BrowserFrame pFrame(m_handler);
+		pFrame.Create(NULL, _T("Browser"), UI_WNDSTYLE_FRAME | WS_CLIPCHILDREN, WS_EX_ACCEPTFILES);
+		pFrame.ShowModal();
+	}
+}
+
 
 //LRESULT MainDuiFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 //	switch (uMsg)

@@ -6,10 +6,6 @@
 #include "simple_handler.h"
 #include "BrowserFrame.h"
 
-DUI_BEGIN_MESSAGE_MAP(BrowserFrame, WindowImplBase)
-	DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
-DUI_END_MESSAGE_MAP()
-
 BrowserFrame::BrowserFrame(CefRefPtr<SimpleHandler> handler) {
 	m_handler = handler;
 }
@@ -53,6 +49,9 @@ void BrowserFrame::Notify(TNotifyUI& msg) {
 	{
 		LPCTSTR url = _T("a");
 		m_urlEdit->SetText(url);
+	}
+	else {
+		return WindowImplBase::Notify(msg);
 	}
 }
 

@@ -9,6 +9,7 @@ public:
 	virtual CDuiString GetSkinFile();
 	virtual void InitWindow();
 	void Notify(TNotifyUI& msg);
+	virtual void OnClick(TNotifyUI& msg);
 public:
 	virtual LPCTSTR GetWindowClassName() const { return _T("MainDuiFrame"); }
 	virtual CDuiString GetSkinFolder() { return _T(""); };

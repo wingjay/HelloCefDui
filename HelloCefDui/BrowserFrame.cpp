@@ -6,6 +6,10 @@
 #include "simple_handler.h"
 #include "BrowserFrame.h"
 
+DUI_BEGIN_MESSAGE_MAP(BrowserFrame, WindowImplBase)
+	DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK, OnClick)
+DUI_END_MESSAGE_MAP()
+
 BrowserFrame::BrowserFrame(CefRefPtr<SimpleHandler> handler) {
 	m_handler = handler;
 }
@@ -23,7 +27,7 @@ CDuiString BrowserFrame::GetSkinFile() {
 
 void BrowserFrame::InitWindow()
 {
-	// 显示网页
+	// show web
 	RECT _rt;
 	GetClientRect(this->m_hWnd, &_rt);
 	int nCx = GetSystemMetrics(SM_CXFULLSCREEN);
@@ -38,83 +42,54 @@ void BrowserFrame::InitWindow()
 	CefBrowserSettings settings;
 
 	BOOL successed = CefBrowserHost::CreateBrowser(info, m_handler, L"http://www.baidu.com", settings, NULL);
+
+	// find native view
+	m_urlEdit = static_cast <CEditUI*>(m_PaintManager.FindControl(_T("urlAddress")));
 }
 
 void BrowserFrame::Notify(TNotifyUI& msg) {
 	CDuiString name = msg.pSender->GetName();
-	CEditUI* pUrlEdit = static_cast <CEditUI*>(m_PaintManager.FindControl(_T("urlAddress")));
-	if (msg.sType == _T("click"))
-	{
-		if (name == _T("jumpUrl"))
-		{
-			CDuiString url = pUrlEdit->GetText();
-			m_handler->GetBrowser()->GetMainFrame()->LoadURL((CefString)url);
-		}
-		else if (name == _T("goback"))
-		{
-			m_handler->GetBrowser()->GoBack();
-		}
-		else if (name == _T("goforward"))
-		{
-			m_handler->GetBrowser()->GoForward();
-		}
-		else if (name == _T("refresh"))
-		{
-			m_handler->GetBrowser()->Reload();
-		}
-		else if (name == _T("close"))
-		{
-			Close();
-		}
-		else if (name == _T("scaleBrowser"))
-		{
-			HWND hwnd = ::FindWindowEx(m_hWnd, NULL, L"CefBrowserWindow", NULL);
-			::MoveWindow(hwnd, 3, 100, 1000, 1200, TRUE);
-		}
-	}
-	else if (msg.sType == _T("addressChange"))
+	if (msg.sType == _T("addressChange"))
 	{
 		LPCTSTR url = _T("a");
-		pUrlEdit->SetText(url);
+		m_urlEdit->SetText(url);
 	}
 }
 
-LRESULT BrowserFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	switch (uMsg)
+void BrowserFrame::OnClick(TNotifyUI& msg)
+{
+	CDuiString name = msg.pSender->GetName();
+	if (name == _T("jumpUrl"))
 	{
-	case WM_CREATE:
-	{
-		// 加载xml文件
-		m_PaintManager.Init(m_hWnd);
-		CDialogBuilder builder;
-		CControlUI* pRoot = builder.Create(_T("browser.xml"), (UINT)0, NULL, &m_PaintManager);
-		ASSERT(pRoot && "Failed to parse XML");
-		m_PaintManager.AttachDialog(pRoot);
-		m_PaintManager.AddNotifier(this);
-		return 0;
-	}
-	case WM_NCCALCSIZE: return 0;
-	case WM_NCACTIVATE:
-	{
-		if (!::IsIconic(m_hWnd))
+		// execute javascript
+		m_handler->GetBrowser()->GetMainFrame()->ExecuteJavaScript(_T("alert('jumpUrl');"), m_handler->GetBrowser()->GetMainFrame()->GetURL(), 0);
+		CDuiString url = m_urlEdit->GetText();
+		if (!url.IsEmpty())
 		{
-			return (wParam == 0) ? TRUE : FALSE;
+			m_handler->GetBrowser()->GetMainFrame()->LoadURL((CefString)url);
 		}
 	}
-	case WM_DESTROY:
+	else if (name == _T("goback"))
 	{
-		::PostQuitMessage(0);
-		break;
+		m_handler->GetBrowser()->GoBack();
 	}
-	case WM_NCPAINT: return 0;
-	default:
-		break;
+	else if (name == _T("goforward"))
+	{
+		m_handler->GetBrowser()->GoForward();
+	}
+	else if (name == _T("refresh"))
+	{
+		m_handler->GetBrowser()->Reload();
+	}
+	else if (name == _T("close"))
+	{
+		Close();
+	}
+	else if (name == _T("scaleBrowser"))
+	{
+		HWND hwnd = ::FindWindowEx(m_hWnd, NULL, L"CefBrowserWindow", NULL);
+		::MoveWindow(hwnd, 3, 100, 1000, 1200, TRUE);
 	}
 
-	LRESULT result = 0;
-	if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, result)) {
-		return result;
-	}
-
-	return CWindowWnd::HandleMessage(uMsg, wParam, lParam);
+	__super::OnClick(msg);
 }

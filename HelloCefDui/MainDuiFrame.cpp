@@ -15,7 +15,7 @@ void MainDuiFrame::OnFinalMessage(HWND hWnd)
 }
 
 CDuiString MainDuiFrame::GetSkinFile() {
-	return _T("browser.xml");
+	return _T("menu.xml");
 }
 
 void MainDuiFrame::InitWindow()
@@ -65,7 +65,6 @@ void MainDuiFrame::Notify(TNotifyUI& msg) {
 		{
 			BrowserFrame pFrame(m_handler);
 			pFrame.Create(NULL, _T("Browser"), UI_WNDSTYLE_FRAME | WS_CLIPCHILDREN, WS_EX_ACCEPTFILES);
-			pFrame.InitWindow();
 			pFrame.ShowModal();
 		}
 	}
@@ -88,42 +87,42 @@ void MainDuiFrame::Notify(TNotifyUI& msg) {
 	}
 }
 
-LRESULT MainDuiFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	switch (uMsg)
-	{
-	case WM_CREATE:
-	{
-		// 加载xml文件
-		m_PaintManager.Init(m_hWnd);
-		CDialogBuilder builder;
-		CControlUI* pRoot = builder.Create(_T("menu.xml"), (UINT)0, NULL, &m_PaintManager);
-		ASSERT(pRoot && "Failed to parse XML");
-		m_PaintManager.AttachDialog(pRoot);
-		m_PaintManager.AddNotifier(this);
-		return 0;
-	}
-	case WM_NCCALCSIZE: return 0;
-	case WM_NCACTIVATE:
-	{
-		if (!::IsIconic(m_hWnd))
-		{
-			return (wParam == 0) ? TRUE : FALSE;
-		}
-	}
-	case WM_DESTROY:
-	{
-		::PostQuitMessage(0);
-		break;
-	}
-	case WM_NCPAINT: return 0;
-	default:
-		break;
-	}
-
-	LRESULT result = 0;
-	if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, result)) {
-		return result;
-	}
-
-	return CWindowWnd::HandleMessage(uMsg, wParam, lParam);
-}
+//LRESULT MainDuiFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
+//	switch (uMsg)
+//	{
+//	case WM_CREATE:
+//	{
+//		// 加载xml文件
+//		m_PaintManager.Init(m_hWnd);
+//		CDialogBuilder builder;
+//		CControlUI* pRoot = builder.Create(_T("menu.xml"), (UINT)0, NULL, &m_PaintManager);
+//		ASSERT(pRoot && "Failed to parse XML");
+//		m_PaintManager.AttachDialog(pRoot);
+//		m_PaintManager.AddNotifier(this);
+//		return 0;
+//	}
+//	case WM_NCCALCSIZE: return 0;
+//	case WM_NCACTIVATE:
+//	{
+//		if (!::IsIconic(m_hWnd))
+//		{
+//			return (wParam == 0) ? TRUE : FALSE;
+//		}
+//	}
+//	case WM_DESTROY:
+//	{
+//		::PostQuitMessage(0);
+//		break;
+//	}
+//	case WM_NCPAINT: return 0;
+//	default:
+//		break;
+//	}
+//
+//	LRESULT result = 0;
+//	if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, result)) {
+//		return result;
+//	}
+//
+//	return CWindowWnd::HandleMessage(uMsg, wParam, lParam);
+//}

@@ -31,7 +31,9 @@
 					<ListLabelElement text="推荐" selected="true" height="50" />
 					<ListLabelElement text="排行榜" height="50" />
 					<ListLabelElement text="歌单" height="50" />
-					<Button name="createCollect" height="30" width="75" text="创建歌单" />
+					<Button name="jumpUrl" height="30" width="75" text="打开虾米" />
+					<Button name="goback" height="30" width="75" text="返回上一个页面" />
+					<Button name="scaleBrowser" height="30" width="75" text="拉升浏览器" />
 				</List>				
 
 				<VerticalLayout>

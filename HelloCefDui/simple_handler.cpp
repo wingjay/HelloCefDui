@@ -21,7 +21,7 @@ namespace {
 }  // namespace
 
 SimpleHandler::SimpleHandler(bool use_views)
-	: use_views_(use_views), is_closing_(false) {
+	: use_views_(use_views), is_closing_(false), m_browser(NULL) {
 	DCHECK(!g_instance);
 	g_instance = this;
 }
@@ -60,6 +60,7 @@ void SimpleHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
 
 	// Add to the list of existing browsers.
 	browser_list_.push_back(browser);
+	m_browser = browser;
 }
 
 bool SimpleHandler::DoClose(CefRefPtr<CefBrowser> browser) {
@@ -93,6 +94,11 @@ void SimpleHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
 	if (browser_list_.empty()) {
 		// All browser windows have closed. Quit the application message loop.
 		CefQuitMessageLoop();
+	}
+
+	if (m_browser->IsSame(browser))
+	{
+		m_browser = NULL;
 	}
 }
 

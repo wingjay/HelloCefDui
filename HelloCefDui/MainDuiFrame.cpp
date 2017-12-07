@@ -26,9 +26,9 @@ void MainDuiFrame::InitWindow()
 	int nCy = GetSystemMetrics(SM_CYFULLSCREEN);
 	RECT rt;
 	rt.left = _rt.left + 200;
-	rt.top = _rt.top + 200;
-	rt.bottom = rt.top + 400;
-	rt.right = rt.left + 400;
+	rt.top = _rt.top + 100;
+	rt.bottom = rt.top + 500;
+	rt.right = rt.left + 600;
 	CefWindowInfo info;
 	info.SetAsChild(m_hWnd, rt);
 	CefBrowserSettings settings;
@@ -75,6 +75,19 @@ void MainDuiFrame::Notify(TNotifyUI& msg) {
 		else if (name == _T("hello"))
 		{
 			::MessageBox(NULL, _T("I'm button"), _T("You clicked!"), NULL); // »¶Ó­°´Å¥
+		}
+		else if (name == _T("jumpUrl"))
+		{
+			m_handler->GetBrowser()->GetMainFrame()->LoadURL("http://www.xiami.com");
+		}
+		else if (name == _T("goback"))
+		{
+			m_handler->GetBrowser()->GoBack();
+		}
+		else if (name == _T("scaleBrowser"))
+		{
+			HWND hwnd = ::FindWindowEx(m_hWnd, NULL, L"CefBrowserWindow", NULL);
+			::MoveWindow(hwnd, 3, 100, 1000, 1200, TRUE);
 		}
 	}
 	else if (msg.sType == _T("selectchanged"))

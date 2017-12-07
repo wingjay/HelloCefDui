@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window size="800, 600" minifo="600, 400" caption="0, 0, 0, 32" sizebox="4,4,4,4">
+	<Default name="Button" value="  height=&quot;25&quot; width=&quot;60&quot; normalimage=&quot;file=&apos;button_nor.bmp&apos;&quot; hotimage=&quot;file=&apos;button_Hot.png&apos;&quot; pushedimage=&quot;file=&apos;button_down.bmp&apos;&quot; focusedimage=&quot;file=&apos;button_over.bmp&apos;&quot; " />
+	<VerticalLayout bkcolor="#FFF0F0F0" >
+		<!-- 标题栏 -->
+		<HorizontalLayout height="32" bkcolor="#FF000000">
+			<VerticalLayout />
+			<HorizontalLayout width="77">
+				<!-- 右边按钮 -->
+				<Button name="minbtn"   float="true" pos="0,5,0,0"  height="19" width="23"  normalimage="file='button_down.bmp'" hotimage="file='button_down.bpm'" pushedimage="file='button_down.bmp'" />
+				<Button name="maxbtn" float="true" pos="22,5,0,0" height="19" width="23" normalimage="file='button_down.bmp'" hotimage="file='button_down.bpm'" pushedimage="file='button_down.bmp'" />
+				<Button name="restorebtn" float="true" pos="22,5,0,0" height="19" width="23" normalimage="file='button_down.bmp'" hotimage="file='button_down.bpm'" pushedimage="file='button_down.bmp'" />
+				<Button name="closebtn" float="true" pos="44,5,0,0" height="19" width="28" normalimage="file='button_Non.png'" hotimage="file='button_Hot.png'" pushedimage="file='button_down.bmp'" />
+			</HorizontalLayout>		
+		</HorizontalLayout>
+
+		<!-- client区 -->
+		<HorizontalLayout height="30">
+			<Button name="goback" width="75" text="返回" />
+			<Button name="goforward" width="75" text="前进" />
+			<Button name="refresh"  width="75" text="刷新" />
+			<Edit name="urlAddress" tooltip="please input your url address here."/>
+			<Button name="jumpUrl" width="75" text="打开" />
+			<Button name="close"  width="75" text="关闭" />
+			<Button name="scaleBrowser"  width="75" text="拉伸" />
+		</HorizontalLayout>
+	</VerticalLayout>
+</Window>

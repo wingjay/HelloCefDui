@@ -5,6 +5,7 @@
 
 #include "simple_handler.h"
 #include "MainDuiFrame.h"
+#include "BrowserFrame.h"
 
 CefRefPtr<SimpleHandler> m_handler(new SimpleHandler(false));
 
@@ -14,27 +15,11 @@ void MainDuiFrame::OnFinalMessage(HWND hWnd)
 }
 
 CDuiString MainDuiFrame::GetSkinFile() {
-	return _T("menu.xml");
+	return _T("browser.xml");
 }
 
 void MainDuiFrame::InitWindow()
 {
-	// 显示网页
-	RECT _rt;
-	GetClientRect(this->m_hWnd, &_rt);
-	int nCx = GetSystemMetrics(SM_CXFULLSCREEN);
-	int nCy = GetSystemMetrics(SM_CYFULLSCREEN);
-	RECT rt;
-	rt.left = _rt.left + 200;
-	rt.top = _rt.top + 100;
-	rt.bottom = rt.top + 500;
-	rt.right = rt.left + 600;
-	CefWindowInfo info;
-	info.SetAsChild(m_hWnd, rt);
-	CefBrowserSettings settings;
-	
-	BOOL successed = CefBrowserHost::CreateBrowser(info, m_handler, L"http://www.baidu.com", settings, NULL);
-	
 	// 为List动态添加内容
 	CDuiString str;
 	CListUI* pList = static_cast <CListUI*>(m_PaintManager.FindControl(_T("list1")));
@@ -76,18 +61,12 @@ void MainDuiFrame::Notify(TNotifyUI& msg) {
 		{
 			::MessageBox(NULL, _T("I'm button"), _T("You clicked!"), NULL); // 欢迎按钮
 		}
-		else if (name == _T("jumpUrl"))
+		else if (name == _T("openBrowser"))
 		{
-			m_handler->GetBrowser()->GetMainFrame()->LoadURL("http://www.xiami.com");
-		}
-		else if (name == _T("goback"))
-		{
-			m_handler->GetBrowser()->GoBack();
-		}
-		else if (name == _T("scaleBrowser"))
-		{
-			HWND hwnd = ::FindWindowEx(m_hWnd, NULL, L"CefBrowserWindow", NULL);
-			::MoveWindow(hwnd, 3, 100, 1000, 1200, TRUE);
+			BrowserFrame pFrame(m_handler);
+			pFrame.Create(NULL, _T("Browser"), UI_WNDSTYLE_FRAME | WS_CLIPCHILDREN, WS_EX_ACCEPTFILES);
+			pFrame.InitWindow();
+			pFrame.ShowModal();
 		}
 	}
 	else if (msg.sType == _T("selectchanged"))

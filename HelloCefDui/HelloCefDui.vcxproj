@@ -166,6 +166,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BrowserFrame.h" />
     <ClInclude Include="HelloCefDui.h" />
     <ClInclude Include="MainDuiFrame.h" />
     <ClInclude Include="resource.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BrowserFrame.cpp" />
     <ClCompile Include="HelloCefDui.cpp" />
     <ClCompile Include="MainDuiFrame.cpp" />
     <ClCompile Include="simple_app.cpp" />

@@ -29,6 +29,9 @@ public:
 	// CefDisplayHandler methods:
 	virtual void OnTitleChange(CefRefPtr<CefBrowser> browser,
 		const CefString& title) OVERRIDE;
+	virtual void OnAddressChange(CefRefPtr<CefBrowser> browser,
+		CefRefPtr<CefFrame> frame,
+		const CefString& url) OVERRIDE;
 
 	// CefLifeSpanHandler methods:
 	virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;
@@ -48,7 +51,6 @@ public:
 	bool IsClosing() const { return is_closing_; }
 
 	CefRefPtr<CefBrowser> GetBrowser() { return m_browser; }
-
 private:
 	// Platform-specific implementation.
 	void PlatformTitleChange(CefRefPtr<CefBrowser> browser,

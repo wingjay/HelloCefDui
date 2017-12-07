@@ -14,8 +14,12 @@
 #include "include/wrapper/cef_closure_task.h"
 #include "include/wrapper/cef_helpers.h"
 
-namespace {
+#include "UIlib.h"
 
+using namespace DuiLib;
+
+namespace {
+	
 	SimpleHandler* g_instance = NULL;
 
 }  // namespace
@@ -55,6 +59,18 @@ void SimpleHandler::OnTitleChange(CefRefPtr<CefBrowser> browser,
 	}
 }
 
+void SimpleHandler::OnAddressChange(CefRefPtr<CefBrowser> browser,
+	CefRefPtr<CefFrame> frame,
+	const CefString& url) {
+	/*if (listener != NULL)
+	{
+		TNotifyUI msg;
+		msg.sType = _T("addressChange");
+		msg.lParam = ((LPARAM&)url);
+		listener->Notify(msg);
+	}*/
+}
+
 void SimpleHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
 	CEF_REQUIRE_UI_THREAD();
 
@@ -82,6 +98,11 @@ bool SimpleHandler::DoClose(CefRefPtr<CefBrowser> browser) {
 void SimpleHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
 	CEF_REQUIRE_UI_THREAD();
 
+	if (m_browser->IsSame(browser))
+	{
+		m_browser = NULL;
+	}
+
 	// Remove from the list of existing browsers.
 	BrowserList::iterator bit = browser_list_.begin();
 	for (; bit != browser_list_.end(); ++bit) {
@@ -93,12 +114,7 @@ void SimpleHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
 
 	if (browser_list_.empty()) {
 		// All browser windows have closed. Quit the application message loop.
-		CefQuitMessageLoop();
-	}
-
-	if (m_browser->IsSame(browser))
-	{
-		m_browser = NULL;
+		::PostQuitMessage(0);
 	}
 }
 

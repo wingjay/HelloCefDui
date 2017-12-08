@@ -98,7 +98,7 @@ bool SimpleHandler::DoClose(CefRefPtr<CefBrowser> browser) {
 void SimpleHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
 	CEF_REQUIRE_UI_THREAD();
 
-	if (m_browser->IsSame(browser))
+	if (m_browser != NULL && m_browser->IsSame(browser))
 	{
 		m_browser = NULL;
 	}

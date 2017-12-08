@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Window size="800, 600" minifo="600, 400" caption="0, 0, 0, 32" sizebox="4,4,4,4">
 	<Default name="Button" value="  height=&quot;25&quot; width=&quot;60&quot; normalimage=&quot;file=&apos;button_nor.bmp&apos;&quot; hotimage=&quot;file=&apos;button_Hot.png&apos;&quot; pushedimage=&quot;file=&apos;button_down.bmp&apos;&quot; focusedimage=&quot;file=&apos;button_over.bmp&apos;&quot; " />
+	<Font name="微软雅黑" size="12" bold="false" />
+
 	<VerticalLayout bkcolor="#FFF0F0F0" >
 		<!-- 标题栏 -->
 		<HorizontalLayout height="32" bkcolor="#FF000000">
@@ -19,7 +21,7 @@
 			<Button name="goback" width="75" text="返回" />
 			<Button name="goforward" width="75" text="前进" />
 			<Button name="refresh"  width="75" text="刷新" />
-			<Edit name="urlAddress" tooltip="please input your url address here."/>
+			<Edit name="urlAddress" font="1" textpadding="10,0,8,0" bordersize="1" focusbordercolor="#FF154B83" nativebkcolor="#FF0E0E0E" bkcolor="#FF0E0E0E" textcolor="#FF4B4F51" disabledtextcolor="#FFA7A6AA" tooltip="please input your url address here."/>
 			<Button name="jumpUrl" width="75" text="打开" />
 			<Button name="close"  width="75" text="关闭" />
 			<Button name="scaleBrowser"  width="75" text="拉伸" />

@@ -31,6 +31,8 @@
 					<ListLabelElement text="推荐" selected="true" height="50" />
 					<ListLabelElement text="排行榜" height="50" />
 					<ListLabelElement text="歌单" height="50" />
+					<Button name="postMsg" height="30" width="75" text="Post Message" />
+					<Text name="receiveMsgCount" text="Received Message: 0" height="50" />
 					<Button name="openBrowser" height="30" width="75" text="打开浏览器" />
 				</List>				
 

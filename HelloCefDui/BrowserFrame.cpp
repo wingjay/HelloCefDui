@@ -43,6 +43,27 @@ void BrowserFrame::InitWindow()
 	m_urlEdit = static_cast <CEditUI*>(m_PaintManager.FindControl(_T("urlAddress")));
 }
 
+LRESULT BrowserFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	if (uMsg == WM_USER + 1)
+	{
+		int a = 0;
+	}
+	// 在父类前，处理某些消息
+	return __super::HandleMessage(uMsg, wParam, lParam); // 让父类去处理部分消息
+}
+
+LRESULT BrowserFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+{
+	if (uMsg == WM_USER + 1)
+	{
+		int a = 0;
+		Close();
+	}
+	// 在父类处理常规消息(HandleMessage)之后
+	return __super::HandleCustomMessage(uMsg, wParam, lParam, bHandled);
+}
+
 void BrowserFrame::Notify(TNotifyUI& msg) {
 	CDuiString name = msg.pSender->GetName();
 	if (msg.sType == _T("addressChange"))
@@ -82,7 +103,8 @@ void BrowserFrame::OnClick(TNotifyUI& msg)
 	}
 	else if (name == _T("close"))
 	{
-		Close();
+		//Close();
+		::PostMessage(m_hWnd, WM_USER + 1, NULL, NULL);
 	}
 	else if (name == _T("scaleBrowser"))
 	{

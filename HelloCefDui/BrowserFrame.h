@@ -10,6 +10,10 @@ public:
 	~BrowserFrame();
 	virtual CDuiString GetSkinFile();
 	virtual void InitWindow();
+public:
+	virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+public:
 	void Notify(TNotifyUI& msg);
 	virtual void OnClick(TNotifyUI& msg);
 public:

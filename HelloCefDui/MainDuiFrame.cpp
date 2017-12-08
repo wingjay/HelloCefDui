@@ -7,6 +7,9 @@
 #include "MainDuiFrame.h"
 #include "BrowserFrame.h"
 
+#define WM_USER_MY_MESSAGE WM_USER + 1 // my message
+
+int receivedMsgCountNum = 0;
 CefRefPtr<SimpleHandler> m_handler(new SimpleHandler(false));
 
 void MainDuiFrame::OnFinalMessage(HWND hWnd)
@@ -18,11 +21,33 @@ CDuiString MainDuiFrame::GetSkinFile() {
 	return _T("menu.xml");
 }
 
+LRESULT MainDuiFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	// 在父类前，处理某些消息
+	return __super::HandleMessage(uMsg, wParam, lParam); // 让父类去处理部分消息
+}
+
+LRESULT MainDuiFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+{
+	if (uMsg == WM_USER_MY_MESSAGE)
+	{
+		receivedMsgCountNum++;
+		CDuiString str;
+		str.Format(_T("Received Message: %d"), receivedMsgCountNum);
+		receivedMsgCount->SetText(str);
+	}
+	// 在父类处理常规消息(HandleMessage)之后
+	return __super::HandleCustomMessage(uMsg, wParam, lParam, bHandled);
+}
+
 void MainDuiFrame::InitWindow()
 {
+	// find controls
+	pList = static_cast <CListUI*>(m_PaintManager.FindControl(_T("list1")));
+	receivedMsgCount = static_cast <CTextUI*>(m_PaintManager.FindControl(_T("receiveMsgCount")));
+
 	// insert content into list.
 	CDuiString str;
-	CListUI* pList = static_cast <CListUI*>(m_PaintManager.FindControl(_T("list1")));
 	for (int i = 0; i < 100; i++)
 	{
 		CHorizontalLayoutUI* group = new CHorizontalLayoutUI;
@@ -78,7 +103,7 @@ void MainDuiFrame::OnClick(TNotifyUI& msg) {
 	CDuiString name = msg.pSender->GetName();
 	if (name == _T("closebtn"))
 	{
-		Close(); 
+		Close();
 	}
 	else if (name == _T("hello"))
 	{
@@ -90,9 +115,30 @@ void MainDuiFrame::OnClick(TNotifyUI& msg) {
 		pFrame.Create(NULL, _T("Browser"), UI_WNDSTYLE_FRAME | WS_CLIPCHILDREN, WS_EX_ACCEPTFILES);
 		pFrame.ShowModal();
 	}
+	else if (name == _T("postMsg"))
+	{
+		::PostMessage(m_hWnd, WM_USER_MY_MESSAGE, NULL, NULL);
+	}
 }
 
+LRESULT MainDuiFrame::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+	return __super::OnCreate(uMsg, wParam, lParam, bHandled);
+}
+LRESULT MainDuiFrame::OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+	return __super::OnClose(uMsg, wParam, lParam, bHandled);
+}
 
+LRESULT MainDuiFrame::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+	return __super::OnDestroy(uMsg, wParam, lParam, bHandled);
+}
+
+LRESULT MainDuiFrame::OnKeyDown(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+	return __super::OnKeyDown(uMsg, wParam, lParam, bHandled);
+}
+
+LRESULT MainDuiFrame::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+	return __super::OnSize(uMsg, wParam, lParam, bHandled);
+}
 //LRESULT MainDuiFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) {
 //	switch (uMsg)
 //	{

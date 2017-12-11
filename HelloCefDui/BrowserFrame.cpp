@@ -38,7 +38,7 @@ void BrowserFrame::InitWindow()
 	CefBrowserSettings settings;
 
 	//CefString url = "https://www.baidu.com";
-	CefString url = "file://C:/Users/yj142679/Desktop/Desktop/HelloCefDui/HelloCefDui/res/reverse_string.html";
+	CefString url = "file://C:/Users/yj142679/Desktop/Desktop/HelloCefDui/HelloCefDui/res/js_bridge.html";
 	BOOL successed = CefBrowserHost::CreateBrowser(info, m_handler, url, settings, NULL);
 
 	// find native view

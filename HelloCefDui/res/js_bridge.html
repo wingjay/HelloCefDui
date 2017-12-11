@@ -21,9 +21,12 @@ function callback(user_info, age) {
 	document.getElementById('user_info').value = user_info + "; My age is " + age;
 }
 
-function getUserById(id) {
-	window.asyncGetUserById(id, function(name, age) {
-		document.getElementById('user_by_id').value = "Info for id: " + id + "; name: " + name + ", age: " + age;
+function getUserById() {
+	var user_id_str = document.getElementById("user_id").value;
+	alert("id" + user_id_str);
+	var user_id = parseInt(user_id_str);
+	window.asyncGetUserById(user_id, function(name, age) {
+		document.getElementById('user_by_id').value = "Info for id: " + user_id + "; name: " + name + ", age: " + age;
 	})
 }
 
@@ -52,7 +55,8 @@ function sendMessage() {
 <br/><input type="button" onclick="asyncInvokeNative();" value="Async Invoke C++ function">
 <br/><textarea id="user_info"></textarea>
 
-<br/><input type="button" onclick="getUserById(1);" value="Async Get user by id.">
+<br/><input type="button" onclick="getUserById();" value="Async Get user by id.">
+<input type="text" id="user_id" value=10>
 <br/><textarea id="user_by_id"></textarea>
 
 <br/>Message: <input type="text" id="message" value="My Message">

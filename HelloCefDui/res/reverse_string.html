@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Message Router Example</title>
+<script language="JavaScript">
+
+function read() {
+	document.getElementById('user_name').value = window.user_name;
+}
+
+function invokeNative() {
+	document.getElementById('count').value = window.getCountFromJs();
+}
+
+function asyncInvokeNative() {
+	window.registerFunction(callback);
+	window.asyncGetUserInfo();
+}
+
+function callback(user_info, age) {
+	// display
+	document.getElementById('user_info').value = user_info + "; My age is " + age;
+}
+
+function getUserById(id) {
+	window.asyncGetUserById(id, function(name, age) {
+		document.getElementById('user_by_id').value = "Info for id: " + id + "; name: " + name + ", age: " + age;
+	})
+}
+
+// Send a query to the browser process.
+function sendMessage() {
+  // Results in a call to the OnQuery method in client_impl.cc.
+  window.cefQuery({
+    request: 'MessageRouterTest:' + document.getElementById("message").value,
+    onSuccess: function(response) {
+      document.getElementById('result').value = 'Response: '+response;
+    },
+    onFailure: function(error_code, error_message) {}
+  });
+}
+</script>
+
+</head>
+<body bgcolor="white">
+<form>
+<br/><input type="button" onclick="read();" value="Read user_name from C++">
+<br/><textarea id="user_name"></textarea>
+
+<br/><input type="button" onclick="invokeNative();" value="Invoke C++ Function: GetCount">
+<br/><div>count from C++:<textarea id="count"></textarea></div>
+
+<br/><input type="button" onclick="asyncInvokeNative();" value="Async Invoke C++ function">
+<br/><textarea id="user_info"></textarea>
+
+<br/><input type="button" onclick="getUserById(1);" value="Async Get user by id.">
+<br/><textarea id="user_by_id"></textarea>
+
+<br/>Message: <input type="text" id="message" value="My Message">
+<br/><input type="button" onclick="sendMessage();" value="Send Message">
+<br/>You should see the reverse of your message below:
+<br/><textarea rows="10" cols="40" id="result"></textarea>
+</form>
+</body>
+</html>

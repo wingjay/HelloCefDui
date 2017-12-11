@@ -34,6 +34,34 @@ SimpleHandler::~SimpleHandler() {
 	g_instance = NULL;
 }
 
+// Browser Process Received Message
+bool SimpleHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser,
+	CefProcessId source_process,
+	CefRefPtr<CefProcessMessage> message) {
+	CEF_REQUIRE_UI_THREAD();
+	CefString name = message->GetName();
+	if (name == "asyncGetUserById")
+	{
+		// fetch user into and give back to Render process.
+		int id = message->GetArgumentList()->GetInt(0);
+
+		std::stringstream ss;
+		ss << "wingjay" << id;
+		CefString user_name = ss.str();
+		int user_age = 25;
+
+		CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create(name);
+		CefRefPtr<CefListValue> args = msg->GetArgumentList();
+		args->SetString(0, user_name);
+		args->SetInt(1, user_age);
+
+		browser->SendProcessMessage(PID_RENDERER, msg);
+		return true;
+	}
+
+	return false;
+}
+
 // static
 SimpleHandler* SimpleHandler::GetInstance() {
 	return g_instance;

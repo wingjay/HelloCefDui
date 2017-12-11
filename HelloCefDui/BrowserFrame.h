@@ -3,6 +3,9 @@
 
 using namespace DuiLib;
 
+#define WM_USER_TEST WM_USER + 1
+#define WM_USER_ASYNC_GET_USER_INFO WM_USER + 2
+
 class BrowserFrame : public WindowImplBase
 {
 public:

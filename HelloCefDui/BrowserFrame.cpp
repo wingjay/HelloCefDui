@@ -37,7 +37,9 @@ void BrowserFrame::InitWindow()
 	info.SetAsChild(m_hWnd, rt);
 	CefBrowserSettings settings;
 
-	BOOL successed = CefBrowserHost::CreateBrowser(info, m_handler, L"http://www.baidu.com", settings, NULL);
+	//CefString url = "https://www.baidu.com";
+	CefString url = "file://C:/Users/yj142679/Desktop/Desktop/HelloCefDui/HelloCefDui/res/reverse_string.html";
+	BOOL successed = CefBrowserHost::CreateBrowser(info, m_handler, url, settings, NULL);
 
 	// find native view
 	m_urlEdit = static_cast <CEditUI*>(m_PaintManager.FindControl(_T("urlAddress")));
@@ -45,20 +47,23 @@ void BrowserFrame::InitWindow()
 
 LRESULT BrowserFrame::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	if (uMsg == WM_USER + 1)
-	{
-		int a = 0;
-	}
-	// 在父类前，处理某些消息
+	// 在父类前，处理某些系统消息
 	return __super::HandleMessage(uMsg, wParam, lParam); // 让父类去处理部分消息
 }
 
 LRESULT BrowserFrame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
-	if (uMsg == WM_USER + 1)
+	if (uMsg == WM_USER_TEST)
 	{
 		int a = 0;
-		Close();
+	}
+	else if (uMsg == WM_USER_ASYNC_GET_USER_INFO)
+	{
+		CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create("user_info");
+		CefRefPtr<CefListValue> args = msg->GetArgumentList();
+		args->SetString(0, "I'm Jay, in Hangzhou");
+		args->SetInt(1, 25);
+		m_handler->GetBrowser()->SendProcessMessage(PID_RENDERER, msg);
 	}
 	// 在父类处理常规消息(HandleMessage)之后
 	return __super::HandleCustomMessage(uMsg, wParam, lParam, bHandled);

@@ -25,6 +25,10 @@ public:
 		return this;
 	}
 	virtual CefRefPtr<CefLoadHandler> GetLoadHandler() OVERRIDE { return this; }
+	// browser process received message
+	virtual bool OnProcessMessageReceived(CefRefPtr<CefBrowser> browser,
+		CefProcessId source_process,
+		CefRefPtr<CefProcessMessage> message) OVERRIDE;
 
 	// CefDisplayHandler methods:
 	virtual void OnTitleChange(CefRefPtr<CefBrowser> browser,

@@ -15,6 +15,8 @@
 
 #include "BrowserFrame.h"
 
+void doSomethingOnUiThread();
+
 int _count = 10;
 // manually register callback
 CefRefPtr<CefV8Value> callback_func_;
@@ -34,15 +36,38 @@ void SimpleApp::OnContextInitialized() {
 }
 // send startup information to a new render process
 void SimpleApp::OnRenderProcessThreadCreated(CefRefPtr<CefListValue> extra_info) {
+	bool ui = CefCurrentlyOn(TID_UI);
+	bool ren = CefCurrentlyOn(TID_RENDERER);
 	int a = 1;
 }
 
+
+class WorkerThreadTask : public CefTask
+{
+	IMPLEMENT_REFCOUNTING(WorkerThreadTask);
+public:
+	void Execute() {
+		doSomethingOnUiThread();
+	}
+
+};
+void doSomethingOnUiThread()
+{
+	CEF_REQUIRE_UI_THREAD();
+	int a = 0;
+}
 
 
 // The render process main thread has been initialized...
 // Receive startup information in the new render process...
 void SimpleApp::OnRenderThreadCreated(CefRefPtr<CefListValue> extra_info) {
 	CEF_REQUIRE_RENDERER_THREAD();
+	if (!CefCurrentlyOn(TID_UI))
+	{
+		// do some thing on UI thread with CefTask
+		CefRefPtr<WorkerThreadTask> task = new WorkerThreadTask;
+		CefPostTask(TID_UI, task);
+	}
 }
 void SimpleApp::OnWebKitInitialized() {
 	// WebKit has been initialized, register V8 extensions...
